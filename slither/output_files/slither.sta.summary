@@ -1,0 +1,137 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk'
+Slack : -15.666
+TNS   : -7016.930
+
+Type  : Slow 1200mV 85C Model Setup 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -3.697
+TNS   : -2742.238
+
+Type  : Slow 1200mV 85C Model Setup 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : -2.054
+TNS   : -8.322
+
+Type  : Slow 1200mV 85C Model Hold 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : -2.615
+TNS   : -12.069
+
+Type  : Slow 1200mV 85C Model Hold 'clk'
+Slack : -0.175
+TNS   : -0.222
+
+Type  : Slow 1200mV 85C Model Hold 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -0.057
+TNS   : -0.057
+
+Type  : Slow 1200mV 85C Model Recovery 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -2.460
+TNS   : -2.460
+
+Type  : Slow 1200mV 85C Model Removal 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : 0.322
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -855.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -1.000
+TNS   : -1093.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : 0.377
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'clk'
+Slack : -14.141
+TNS   : -6292.989
+
+Type  : Slow 1200mV 0C Model Setup 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -3.328
+TNS   : -2375.777
+
+Type  : Slow 1200mV 0C Model Setup 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : -1.910
+TNS   : -7.743
+
+Type  : Slow 1200mV 0C Model Hold 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : -2.337
+TNS   : -10.785
+
+Type  : Slow 1200mV 0C Model Hold 'clk'
+Slack : -0.180
+TNS   : -0.247
+
+Type  : Slow 1200mV 0C Model Hold 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -0.017
+TNS   : -0.017
+
+Type  : Slow 1200mV 0C Model Recovery 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -2.147
+TNS   : -2.147
+
+Type  : Slow 1200mV 0C Model Removal 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : 0.249
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -855.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -1.000
+TNS   : -1093.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : 0.432
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'clk'
+Slack : -9.019
+TNS   : -3861.874
+
+Type  : Fast 1200mV 0C Model Setup 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -1.749
+TNS   : -1123.280
+
+Type  : Fast 1200mV 0C Model Setup 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : -0.955
+TNS   : -3.646
+
+Type  : Fast 1200mV 0C Model Hold 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : -1.556
+TNS   : -7.251
+
+Type  : Fast 1200mV 0C Model Hold 'clk'
+Slack : -0.195
+TNS   : -0.322
+
+Type  : Fast 1200mV 0C Model Hold 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -0.045
+TNS   : -0.085
+
+Type  : Fast 1200mV 0C Model Recovery 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -1.026
+TNS   : -1.026
+
+Type  : Fast 1200mV 0C Model Removal 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : 0.169
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -904.662
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'gerador_tick:TICK_ENTITY|tick_signal'
+Slack : -1.000
+TNS   : -1093.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'tabuleiro:TABULEIRO_ENTITY|estado[0]'
+Slack : 0.336
+TNS   : 0.000
+
+------------------------------------------------------------

@@ -1,0 +1,46 @@
+
+State Machine - |slither|FSM_cobra:FSM_COBRA_PINK_ENTITY|pr_state
+Name pr_state.DESAPARECE pr_state.DESCENDO pr_state.SUBINDO pr_state.DIREITA pr_state.ESQUERDA pr_state.MORREU pr_state.PARADA 
+pr_state.PARADA 0 0 0 0 0 0 0 
+pr_state.MORREU 0 0 0 0 0 1 1 
+pr_state.ESQUERDA 0 0 0 0 1 0 1 
+pr_state.DIREITA 0 0 0 1 0 0 1 
+pr_state.SUBINDO 0 0 1 0 0 0 1 
+pr_state.DESCENDO 0 1 0 0 0 0 1 
+pr_state.DESAPARECE 1 0 0 0 0 0 1 
+
+State Machine - |slither|FSM_cobra:FSM_COBRA_YELLOW_ENTITY|pr_state
+Name pr_state.DESAPARECE pr_state.DESCENDO pr_state.SUBINDO pr_state.DIREITA pr_state.ESQUERDA pr_state.MORREU pr_state.PARADA 
+pr_state.PARADA 0 0 0 0 0 0 0 
+pr_state.MORREU 0 0 0 0 0 1 1 
+pr_state.ESQUERDA 0 0 0 0 1 0 1 
+pr_state.DIREITA 0 0 0 1 0 0 1 
+pr_state.SUBINDO 0 0 1 0 0 0 1 
+pr_state.DESCENDO 0 1 0 0 0 0 1 
+pr_state.DESAPARECE 1 0 0 0 0 0 1 
+
+State Machine - |slither|FSM_cobra:FSM_COBRA_GREEN_ENTITY|pr_state
+Name pr_state.DESAPARECE pr_state.DESCENDO pr_state.SUBINDO pr_state.DIREITA pr_state.ESQUERDA pr_state.MORREU pr_state.PARADA 
+pr_state.PARADA 0 0 0 0 0 0 0 
+pr_state.MORREU 0 0 0 0 0 1 1 
+pr_state.ESQUERDA 0 0 0 0 1 0 1 
+pr_state.DIREITA 0 0 0 1 0 0 1 
+pr_state.SUBINDO 0 0 1 0 0 0 1 
+pr_state.DESCENDO 0 1 0 0 0 0 1 
+pr_state.DESAPARECE 1 0 0 0 0 0 1 
+
+State Machine - |slither|FSM_cobra:FSM_COBRA_BLUE_ENTITY|pr_state
+Name pr_state.DESAPARECE pr_state.DESCENDO pr_state.SUBINDO pr_state.DIREITA pr_state.ESQUERDA pr_state.MORREU pr_state.PARADA 
+pr_state.PARADA 0 0 0 0 0 0 0 
+pr_state.MORREU 0 0 0 0 0 1 1 
+pr_state.ESQUERDA 0 0 0 0 1 0 1 
+pr_state.DIREITA 0 0 0 1 0 0 1 
+pr_state.SUBINDO 0 0 1 0 0 0 1 
+pr_state.DESCENDO 0 1 0 0 0 0 1 
+pr_state.DESAPARECE 1 0 0 0 0 0 1 
+
+State Machine - |slither|FSM_jogo:FSM_JOGO_ENTITY|pr_state
+Name pr_state.ACABOU pr_state.JOGANDO pr_state.ESPERANDO 
+pr_state.ESPERANDO 0 0 0 
+pr_state.JOGANDO 0 1 1 
+pr_state.ACABOU 1 0 1 

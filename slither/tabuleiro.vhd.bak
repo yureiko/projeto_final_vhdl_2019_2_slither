@@ -1,0 +1,216 @@
+library ieee;
+use ieee.std_logic_1164.all;
+library work;
+use work.comum.all;
+
+entity tabuleiro is
+	
+port(
+		tick						: 	in	std_logic;				--variável de tick, controla o fluxo de comida
+		
+--variaveis que só são utilizadas na implementaçao da cobra virando comida	
+--		green_snake_x			:	in posicao_X_type;
+--		green_snake_y			:	in posicao_Y_type;
+--		green_size				:	in natural range 0 to MAX_SNAKE_LENGTH-1;
+--		green_dead				:	in std_logic;
+--		
+--		yellow_snake_x			:	in posicao_X_type;
+--		yellow_snake_y			:	in posicao_Y_type;
+--		yellow_size				:	in natural range 0 to MAX_SNAKE_LENGTH-1;
+--		yellow_dead				:	in std_logic;
+--		
+--		blue_snake_x			:	in posicao_X_type;
+--		blue_snake_y			:	in posicao_Y_type;
+--		blue_size				:	in natural range 0 to MAX_SNAKE_LENGTH-1;
+--		blue_dead				:	in std_logic;
+--		
+--		pink_snake_x			:	in posicao_X_type;
+--		pink_snake_y			:	in posicao_Y_type;
+--		pink_size				:	in natural range 0 to MAX_SNAKE_LENGTH-1;
+--		pink_dead				:	in std_logic;
+		
+		new_food_position_x	:	in natural range 0 to X_RESOLUTION -1;				--recebe a coordenada para inserir uma comida no tabuleiro
+		new_food_position_y	:	in natural range 0 to Y_RESOLUTION -1;				--recebe a coordenada para inserir uma comida no tabuleiro
+		
+		clear_food_position_x 	: 	POSICAO_X_COMIDAS_TYPE;								--recebe a coordeneda para limpar uma comida do tabuleiro
+		clear_food_position_y 	: 	POSICAO_Y_COMIDAS_TYPE;								--recebe a coordeneda para limpar uma comida do tabuleiro
+		
+		
+		--SAIDAS
+
+		food_array_out_x		: 	out FOOD_ARRAY_X_TYPE;									--vetor de comidas com MAX_FOOD posiçoes, contém as coordenadas
+		food_array_out_y		: 	out FOOD_ARRAY_Y_TYPE;									--vetor de comidas com MAX_FOOD posiçoes, contém as coordenadas
+
+		food_index				: 	out natural range 0 to FOOD_ARRAY_SIZE				--vetor que contém a quantidade de comidas do vetor
+			 
+);
+end entity;
+
+architecture tabuleiro_a of tabuleiro is
+
+signal food_array_x 			: FOOD_ARRAY_X_TYPE;
+signal food_array_y 			: FOOD_ARRAY_Y_TYPE;
+
+signal green_food_array_x 	: natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+signal green_food_array_y 	: natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+
+signal yellow_food_array_x : natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+signal yellow_food_array_y : natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+
+signal blue_food_array_x 	: natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+signal blue_food_array_y 	: natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+
+signal pink_food_array_x 	: natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+signal pink_food_array_y 	: natural range 0 to (MAX_SNAKE_LENGTH/2) - 1;
+
+signal food_count				: NATURAL range 0 to FOOD_ARRAY_SIZE;
+
+signal flag_food				: std_logic_vector(FOOD_ARRAY_SIZE downto 0);		--sinalizador que a comida ja existe no vetor
+signal index_remove_0		: FOOD_INDEX_REMOVE;											--busca o índice da primeira comida a ser removida, se tiver
+signal index_remove_1		: FOOD_INDEX_REMOVE;											--busca o índice da segunda comida a ser removida, se tiver
+signal index_remove_2		: FOOD_INDEX_REMOVE;											--busca o índice da terceira comida a ser removida, se tiver
+signal index_remove_3		: FOOD_INDEX_REMOVE;											--busca o índice da quarta comida a ser removida, se tiver
+
+begin
+
+--Verifica se a nova comida ja existe no vetor de comidas
+flag_food(0) <= '0';
+FOOD_ARRAY_FIND: for i in 1 to FOOD_ARRAY_SIZE  generate
+							flag_food(i) <= 	'1' when food_array_x(i-1) = new_food_position_x and food_array_y(i-1) = new_food_position_y 
+													and new_food_position_y  /= 0 and new_food_position_x /= 0
+													else
+													flag_food(i-1);
+						end generate FOOD_ARRAY_FIND;
+						
+--verifica qual o índice da primeira comida a ser removida, se tiver 
+index_remove_0(0) <= -1;						
+FOOD_REMOVE_FIND_0: for i in 1 to FOOD_ARRAY_SIZE  generate
+							index_remove_0(i) <= 	(i-1) when food_array_x(i-1) = clear_food_position_x(0) and food_array_y(i-1) = clear_food_position_y(0) 
+														and clear_food_position_x(0) /= 0 and clear_food_position_y(0) /= 0
+														else
+														index_remove_0(i-1);
+						end generate FOOD_REMOVE_FIND_0;
+						
+--verifica qual o índice da segunda comida a ser removida, se tiver 						
+index_remove_1(0) <= -1;						
+FOOD_REMOVE_FIND_1: for i in 1 to FOOD_ARRAY_SIZE  generate
+							index_remove_1(i) <= 	(i-1) when food_array_x(i-1) = clear_food_position_x(1) and food_array_y(i-1) = clear_food_position_y(1) 
+														and clear_food_position_x(1) /= 0 and clear_food_position_y(1) /= 0
+														else
+														index_remove_1(i-1);
+						end generate FOOD_REMOVE_FIND_1;
+						
+--verifica qual o índice da terceira comida a ser removida, se tiver 						
+index_remove_2(0) <= -1;						
+FOOD_REMOVE_FIND_2: for i in 1 to FOOD_ARRAY_SIZE  generate
+							index_remove_2(i) <= 	(i-1) when food_array_x(i-1) = clear_food_position_x(2) and food_array_y(i-1) = clear_food_position_y(2) 
+														and clear_food_position_x(2) /= 0 and clear_food_position_y(2) /= 0
+														else
+														index_remove_2(i-1);
+						end generate FOOD_REMOVE_FIND_2;
+						
+--verifica qual o índice da quarta comida a ser removida, se tiver 						
+index_remove_3(0) <= -1;						
+FOOD_REMOVE_FIND_3: for i in 1 to FOOD_ARRAY_SIZE  generate
+							index_remove_3(i) <= 	(i-1) when food_array_x(i-1) = clear_food_position_x(3) and food_array_y(i-1) = clear_food_position_y(3) 
+														and clear_food_position_x(3) /= 0 and clear_food_position_y(3) /= 0
+														else
+														index_remove_3(i-1);
+						end generate FOOD_REMOVE_FIND_3;
+
+
+--processo que insere e remove comidas do vetor de comidas
+process(tick)
+begin
+	if falling_edge(tick) then
+		if index_remove_0(FOOD_ARRAY_SIZE) /= -1 then 										--caso exista uma comida para ser removida
+			
+			REMOVE_FOOD_0:	for i in 0 to FOOD_ARRAY_SIZE -1 loop
+									if i >= index_remove_0(FOOD_ARRAY_SIZE) then
+										food_array_x(i) <= food_array_x(i+1);				--desloca o vetor para as posicoes menos significativas
+										food_array_y(i) <= food_array_y(i+1);
+									end if;
+								end loop REMOVE_FOOD_0;
+			food_count <= food_count -1;														--decrementa o contador de comidas
+			
+		elsif index_remove_1(FOOD_ARRAY_SIZE) /= -1 then 								--caso exista uma comida para ser removida
+			
+			REMOVE_FOOD_1:	for i in 0 to FOOD_ARRAY_SIZE -1 loop
+									if i >= index_remove_1(FOOD_ARRAY_SIZE) then			--desloca o vetor para as posicoes menos significativas
+										food_array_x(i) <= food_array_x(i+1);
+										food_array_y(i) <= food_array_y(i+1);
+									end if;
+								end loop REMOVE_FOOD_1;
+			food_count <= food_count -1;														--decrementa o contador de comidas
+		
+		elsif index_remove_2(FOOD_ARRAY_SIZE) /= -1 then 								--caso exista uma comida para ser removida
+			
+			REMOVE_FOOD_2:	for i in 0 to FOOD_ARRAY_SIZE -1 loop
+									if i >= index_remove_2(FOOD_ARRAY_SIZE) then				
+										food_array_x(i) <= food_array_x(i+1);				--desloca o vetor para as posicoes menos significativas
+										food_array_y(i) <= food_array_y(i+1);
+									end if;
+								end loop REMOVE_FOOD_2;
+			food_count <= food_count -1;														--decrementa o contador de comidas
+			
+		elsif index_remove_3(FOOD_ARRAY_SIZE) /= -1 then 								--caso exista uma comida para ser removida
+			
+			REMOVE_FOOD_3:	for i in 0 to FOOD_ARRAY_SIZE -1 loop
+									if i >= index_remove_3(FOOD_ARRAY_SIZE) then
+										food_array_x(i) <= food_array_x(i+1);				--desloca o vetor para as posicoes menos significativas
+										food_array_y(i) <= food_array_y(i+1);
+									end if;
+								end loop REMOVE_FOOD_3;	
+			food_count <= food_count -1;														--decrementa o contador de comidas
+			
+		elsif food_count < MAX_FOOD and flag_food(FOOD_ARRAY_SIZE) = '0' then 	--insere caso tenha espaço e caso a comida nao exista
+			food_array_x(food_count) <= new_food_position_x;							--insere comida na ultima posicao valida
+			food_array_y(food_count) <= new_food_position_y;							--insere comida na ultima posicao valida
+			
+			food_count <= food_count +1;														--incrementa o contador de comidas
+		end if;		
+	end if;
+end process;
+
+
+
+--process(all)
+--begin
+--
+--GEN_FOOD : for i in 0 to (MAX_FOOD - 1 + (MAX_SNAKE_LENGTH-1)*4) loop						
+--		
+--	if i > food_count then
+--	
+--		if rising_edge(green_dead) then
+--			                        
+--		
+--		end if;
+--		
+--		if rising_edge(yellow_dead) then
+--			
+--		
+--		end if;
+--		
+--		if rising_edge(blue_dead) then
+--			
+--		
+--		end if;
+--		
+--		if rising_edge(pink_dead) then
+--			
+--		
+--		end if;
+--			
+--		
+--	end if;
+--end loop GEN_FOOD;
+--
+--end process;
+
+food_index <= food_count;				--envia contador de comidas para a saída
+
+food_array_out_x <= food_array_x;	--envia vetores de comidas para a saída
+food_array_out_y <= food_array_y;
+
+	
+end architecture;

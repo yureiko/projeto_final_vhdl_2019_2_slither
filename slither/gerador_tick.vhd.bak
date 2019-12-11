@@ -1,0 +1,31 @@
+library ieee;
+USE ieee.std_logic_1164.all;
+library work;
+USE work.comum.all;
+ENTITY gerador_tick is
+	port(	clk : in std_logic;
+			led0 : out std_logic;
+			tick : out std_logic
+			);
+END ENTITY;
+ARCHITECTURE arch of gerador_tick is
+signal tick_signal : std_logic;
+	begin
+	
+	PROCESS(clk)
+		VARIABLE counter : integer := 0;
+		BEGIN
+		IF rising_edge(clk) THEN		
+			tick_signal <= '0';
+			led0 <= '0';
+			counter := counter + 1;
+			if(counter = 50000*TIMETICK_MS) then
+				counter := 0;
+				tick_signal <= '1';
+				led0 <= '1';
+			end if;
+		
+		END IF;
+	END PROCESS;
+	tick <= tick_signal;
+END ARCHITECTURE;

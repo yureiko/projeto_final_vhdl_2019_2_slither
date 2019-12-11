@@ -1,0 +1,106 @@
+---------------------------------------------
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+LIBRARY work;
+USE work.comum.all;
+---------------------------------------------
+ENTITY Controle_Colisao IS
+	PORT (
+		clk						: IN STD_LOGIC;
+		POS_X_COBRA_GREEN		: IN posicao_X_type;
+		POS_Y_COBRA_GREEN		: IN posicao_Y_type;
+		POS_X_COBRA_YELLOW	: IN posicao_X_type;
+		POS_Y_COBRA_YELLOW	: IN posicao_Y_type;
+		POS_X_COBRA_BLUE		: IN posicao_X_type;
+		POS_Y_COBRA_BLUE		: IN posicao_Y_type;
+		POS_X_COBRA_PINK		: IN posicao_X_type;
+		POS_Y_COBRA_PINK		: IN posicao_Y_type;
+		VETOR_X_COMIDAS 		: IN FOOD_ARRAY_X_TYPE;
+		VETOR_Y_COMIDAS 		: IN FOOD_ARRAY_Y_TYPE;
+		POSICAO_X_COMIDA		: OUT POSICAO_X_COMIDAS_TYPE;
+		POSICAO_Y_COMIDA		: OUT POSICAO_Y_COMIDAS_TYPE;
+		AUMENTA_COBRA_GREEN	: OUT STD_LOGIC;
+		AUMENTA_COBRA_YELLOW	: OUT STD_LOGIC;
+		AUMENTA_COBRA_BLUE	: OUT STD_LOGIC;
+		AUMENTA_COBRA_PINK	: OUT STD_LOGIC;
+		PERDE_VIDA_GREEN	 	: OUT STD_LOGIC;
+		PERDE_VIDA_YELLOW	 	: OUT STD_LOGIC;
+		PERDE_VIDA_BLUE	 	: OUT STD_LOGIC;
+		PERDE_VIDA_PINK	 	: OUT STD_LOGIC	
+	);
+END ENTITY;
+---------------------------------------------
+ARCHITECTURE Behavior OF Controle_Colisao IS	
+	TYPE POSICAO_X_4COBRAS_TYPE is array (3 downto 0) of posicao_X_type;
+	TYPE POSICAO_Y_4COBRAS_TYPE is array (3 downto 0) of posicao_Y_type;
+	SIGNAL sig_colisao_boa 		: STD_LOGIC_VECTOR(3 DOWNTO 0);
+	SIGNAl sig_colisao_ruim		: STD_LOGIC_VECTOR(3 DOWNTO 0); 
+	SIGNAL sig_pos_x_cobras 	: POSICAO_X_4COBRAS_TYPE;
+	SIGNAL sig_pos_y_cobras 	: POSICAO_Y_4COBRAS_TYPE;
+	SIGNAL sig_pos_x_comida 	: POSICAO_X_COMIDAS_TYPE;
+	SIGNAL sig_pos_y_comida 	: POSICAO_Y_COMIDAS_TYPE;
+	SIGNAL sig_vetor_x_food 	: FOOD_ARRAY_X_TYPE;
+	SIGNAL sig_vetor_y_food 	: FOOD_ARRAY_Y_TYPE;
+	
+BEGIN
+	sig_pos_x_cobras(0) 	<= POS_X_COBRA_GREEN;
+	sig_pos_y_cobras(0) 	<= POS_Y_COBRA_GREEN;
+	sig_pos_x_cobras(1) 	<= POS_X_COBRA_YELLOW;
+	sig_pos_y_cobras(1) 	<= POS_Y_COBRA_YELLOW;
+	sig_pos_x_cobras(2) 	<= POS_X_COBRA_BLUE;
+	sig_pos_y_cobras(2) 	<= POS_Y_COBRA_BLUE;
+	sig_pos_x_cobras(3) 	<= POS_X_COBRA_PINK;
+	sig_pos_y_cobras(3) 	<= POS_Y_COBRA_PINK;
+	sig_vetor_x_food 		<= VETOR_X_COMIDAS;
+	sig_vetor_y_food 		<= VETOR_Y_COMIDAS;
+	
+	PERDE_VIDA_GREEN 		<= sig_colisao_ruim(0);
+	PERDE_VIDA_YELLOW 	<= sig_colisao_ruim(1);
+	PERDE_VIDA_BLUE 		<= sig_colisao_ruim(2);
+	PERDE_VIDA_PINK 		<= sig_colisao_ruim(3);
+	AUMENTA_COBRA_GREEN	<= sig_colisao_boa(0);
+	AUMENTA_COBRA_YELLOW	<= sig_colisao_boa(1);
+	AUMENTA_COBRA_BLUE	<= sig_colisao_boa(2);
+	AUMENTA_COBRA_PINK	<= sig_colisao_boa(3);
+	POSICAO_X_COMIDA		<= sig_pos_x_comida;
+	POSICAO_Y_COMIDA		<= sig_pos_Y_comida;
+	
+	colisao_malefica_process:
+	process(clk)
+	begin
+		for I in 0 to 3 loop
+			for L in 0 to 3 loop
+				for J in 0 to MAX_SNAKE_LENGTH - 1 loop
+					if 	(sig_pos_x_cobras(I)(0) = X_LEFT_CORNER or sig_pos_y_cobras(I)(0) = Y_UP_CORNER or
+							sig_pos_x_cobras(I)(1) = X_RIGHT_CORNER or sig_pos_y_cobras(I)(1) = Y_DOWN_CORNER) or
+							(sig_pos_x_cobras(I)(0) = sig_pos_x_cobras(L)(J) and sig_pos_y_cobras(I)(0) = sig_pos_y_cobras(L)(J)) then
+						sig_colisao_ruim(I) <= '1'; 
+					else
+						sig_colisao_ruim(I) <= '0'; 
+					end if;
+				end loop ;
+			end loop;
+		end loop; 
+	end process colisao_malefica_process;
+	
+	
+	colisao_comida_process:	
+	process(clk)
+	begin
+		for I in 0 to 3 loop
+			for J in 0 to MAX_FOOD loop
+				if sig_pos_x_cobras(I)(0) = sig_vetor_x_food(J) and sig_pos_y_cobras(I)(0) = sig_vetor_y_food(J) then 
+					sig_pos_x_comida(I) 	<= sig_vetor_x_food(J);
+					sig_pos_y_comida(I) 	<= sig_vetor_y_food(J);
+					sig_colisao_boa(I)	<= '1'; 
+				else
+					sig_pos_x_comida(I) 	<= 0;
+					sig_pos_y_comida(I) 	<= 0;
+					sig_colisao_boa(I)	<= '0';
+				end if;
+			end loop;
+		end loop;
+	end process colisao_comida_process;
+	
+END ARCHITECTURE;

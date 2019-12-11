@@ -1,0 +1,58 @@
+library ieee;
+USE ieee.std_logic_1164.all;
+library work;
+USE work.comum.all;
+ENTITY GERADOR_COBRA is
+	port(	Tick : IN std_logic;	--Sinal de entrada: tick
+			pos_cobra_x : out natural RANGE 1 TO 63;
+			pos_cobra_y : out natural RANGE 1 TO 47
+			);--Sinais de saida: posicao x e y das comidas
+END ENTITY;
+ARCHITECTURE arq_GERADOR_COBRA of GERADOR_COBRA is
+	
+	TYPE NAT_ARRAY is array (natural range <>) of natural;--instaciamento do vetor de inteiros (30 posicoes,0-29)
+	
+	SIGNAL NAT_ARRAY_X : NAT_ARRAY (0 TO 60);--vetor de inteiros para posicao x
+	SIGNAL NAT_ARRAY_Y : NAT_ARRAY (0 TO 44);--vetor de inteiros para posicao y
+	
+	SIGNAL POS_X : natural RANGE 1 TO 62:= 1;
+	SIGNAL POS_Y : natural RANGE 1 TO 46:= 1;
+	
+	begin
+		NAT_ARRAY_X <= (35,59,60,12,21,44,43,49,29,
+							57,27,38,34,16,58,19,28,1,
+							15,23,11,32,42,52,36,39,56,
+							37,17,51,33,55,45,53,54,5 ,
+							6 ,9 ,18,8 ,10,2 ,47,7 ,48,
+							3 ,50,31,30,4 ,24,13,61,14,
+							20,26,25,22,41,40,46);	--declaracao de valores para posicoes X
+							
+		NAT_ARRAY_Y <= (4 ,3 ,13,19,33,38,30,41,18,
+							 1,25,26,16,11,32,21,31,36,
+							 17,42,29,5 ,20,23,14,40,12,
+							 28,35,45,24,7 ,34,44,15,37,
+							 22,8 ,2 ,27,10,6 ,9 ,43,39);	--declaracao de valores para posicoes Y
+	
+		pos_cobra_x <= POS_X;
+		pos_cobra_Y <= POS_Y;
+		
+	PROCESS(Tick)
+		
+		VARIABLE counter_X : natural RANGE 1 TO 63;
+		VARIABLE counter_Y : natural RANGE 1 TO 47;	
+		
+		BEGIN
+		IF rising_edge(Tick) THEN		
+			counter_X := counter_X + 1;	
+			counter_Y := counter_Y + 1;	
+			POS_X <= NAT_ARRAY_X(counter_X);	
+			POS_Y <= NAT_ARRAY_Y(counter_Y);
+			IF counter_X>62 THEN	
+				counter_X := 1;	
+			END IF;
+			IF counter_Y>46 THEN	
+				counter_Y := 1;	
+			END IF;
+		END IF;
+	END PROCESS;
+END ARCHITECTURE;

@@ -1,0 +1,58 @@
+library ieee;
+USE ieee.std_logic_1164.all;
+library work;
+USE work.comum.all;
+ENTITY GERADOR_COMIDA is
+	port(	Tick : IN std_logic;	--Sinal de entrada: tick
+			pos_comida_x : out natural RANGE 1 TO 63;
+			pos_comida_y : out natural RANGE 1 TO 47
+			);--Sinais de saida: posicao x e y das comidas
+END ENTITY;
+ARCHITECTURE arq_GERADOR_COMIDA of GERADOR_COMIDA is
+	
+	TYPE NAT_ARRAY is array (natural range <>) of natural;--instaciamento do vetor de inteiros (30 posicoes,0-29)
+	
+	SIGNAL NAT_ARRAY_X : NAT_ARRAY (0 TO 62);--vetor de inteiros para posicao x
+	SIGNAL NAT_ARRAY_Y : NAT_ARRAY (0 TO 46);--vetor de inteiros para posicao y
+	
+	SIGNAL POS_X : natural RANGE 1 TO 63:= 1;
+	SIGNAL POS_Y : natural RANGE 1 TO 47:= 1;
+	
+	begin
+		NAT_ARRAY_X <= (18,25,10,44,14,17,2 ,51,60,
+							 52,42,34,33,39,43,58,6 ,27,
+							 23,62,13,45,55,19,47,26,30,
+							 16,29,32,9 ,7 ,4 ,57,3 ,56,
+							 12,63,50,31,38,61,21,24,36,
+							 28,59,35,40,11,20,8 ,46,48,
+							 49,15,5 ,53,54,41,22,1 ,37);	--declaracao de valores para posicoes X
+							
+		NAT_ARRAY_Y <= (41,45,42,36,14,30,5 ,13,18,
+							 10,24,17,21,40,16,47,31,38,
+							 9 ,3 ,15,44,12,35,37,43,6 ,
+							 29,34,8 ,7 ,23,2 ,39,46,26,
+							 33,20,4 ,22,19,25,1 ,27,32,
+							 28,11);	--declaracao de valores para posicoes Y
+	
+		pos_comida_x <= POS_X;
+		pos_comida_y <= POS_Y;
+		
+	PROCESS(Tick)
+		
+		VARIABLE counter_X : natural RANGE 1 TO 63;
+		VARIABLE counter_Y : natural RANGE 1 TO 47;	
+		
+		BEGIN
+		IF rising_edge(Tick) THEN		
+			counter_X := counter_X + 1;	
+			counter_Y := counter_Y + 1;	
+			POS_X <= NAT_ARRAY_X(counter_X);	
+			POS_Y <= NAT_ARRAY_Y(counter_Y);			IF counter_X>62 THEN	
+				counter_X := 1;	
+			END IF;
+			IF counter_Y>46 THEN	
+				counter_Y := 1;	
+			END IF;
+		END IF;
+	END PROCESS;
+END ARCHITECTURE;

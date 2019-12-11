@@ -1,0 +1,20 @@
+---------------------------------------------
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+LIBRARY work;
+USE work.comum.all;
+---------------------------------------------
+
+ENTITY BOTOES IS
+	PORT (
+		clk: 				IN STD_LOGIC;
+		rst:	 			IN STD_LOGIC;
+
+	);
+END ENTITY;
+---------------------------------------------
+ARCHITECTURE arch OF BOTOES IS	
+BEGIN
+
+END ARCHITECTURE;

@@ -1,0 +1,16 @@
+Projeto Slither em VHDL
+Ano: 2019
+
+Turma de engenharia eletrônica UTFPR 2019/2
+1) André Ferriani
+2) Ariadne Piasson
+3) Bruno Chagas
+4) Davi Silva
+5) Erika Both
+6) Fernando da Silva
+7) Gabriel Botogoske
+8) Geiziely Pinto
+9) Gustavo Moy
+10) Rodrigo Friesen
+11) Thais Saori
+12) Yuri Andrieiko

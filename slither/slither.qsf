@@ -1,0 +1,138 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2013 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
+# Date created = 00:51:31  December 01, 2019
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		slither_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone III"
+set_global_assignment -name DEVICE EP3C16F484C6
+set_global_assignment -name TOP_LEVEL_ENTITY slither
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "00:51:31  DECEMBER 01, 2019"
+set_global_assignment -name LAST_QUARTUS_VERSION 13.0
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_K18 -to blue[3]
+set_location_assignment PIN_J22 -to blue[2]
+set_location_assignment PIN_K21 -to blue[1]
+set_location_assignment PIN_G21 -to clk
+set_location_assignment PIN_J21 -to green[3]
+set_location_assignment PIN_K17 -to green[2]
+set_location_assignment PIN_J17 -to green[1]
+set_location_assignment PIN_H22 -to green[0]
+set_location_assignment PIN_L21 -to Hsync
+set_location_assignment PIN_H21 -to red[3]
+set_location_assignment PIN_H20 -to red[2]
+set_location_assignment PIN_H17 -to red[1]
+set_location_assignment PIN_H19 -to red[0]
+set_location_assignment PIN_L22 -to Vsync
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_location_assignment PIN_D2 -to rst
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_location_assignment PIN_AA20 -to bot_start_blue
+set_location_assignment PIN_AB20 -to bot_mov_blue[0]
+set_location_assignment PIN_AB19 -to bot_mov_blue[1]
+set_location_assignment PIN_AA18 -to bot_mov_blue[2]
+set_location_assignment PIN_AB17 -to bot_mov_blue[3]
+set_location_assignment PIN_B18 -to saida_lcd_blue[0]
+set_location_assignment PIN_F15 -to saida_lcd_blue[1]
+set_location_assignment PIN_A19 -to saida_lcd_blue[2]
+set_location_assignment PIN_B19 -to saida_lcd_blue[3]
+set_location_assignment PIN_C19 -to saida_lcd_blue[4]
+set_location_assignment PIN_D19 -to saida_lcd_blue[5]
+set_location_assignment PIN_G15 -to saida_lcd_blue[6]
+set_location_assignment PIN_D15 -to saida_lcd_green[0]
+set_location_assignment PIN_A16 -to saida_lcd_green[1]
+set_location_assignment PIN_B16 -to saida_lcd_green[2]
+set_location_assignment PIN_E15 -to saida_lcd_green[3]
+set_location_assignment PIN_A17 -to saida_lcd_green[4]
+set_location_assignment PIN_B17 -to saida_lcd_green[5]
+set_location_assignment PIN_F14 -to saida_lcd_green[6]
+set_location_assignment PIN_A13 -to saida_lcd_yellow[0]
+set_location_assignment PIN_B13 -to saida_lcd_yellow[1]
+set_location_assignment PIN_C13 -to saida_lcd_yellow[2]
+set_location_assignment PIN_A14 -to saida_lcd_yellow[3]
+set_location_assignment PIN_B14 -to saida_lcd_yellow[4]
+set_location_assignment PIN_E14 -to saida_lcd_yellow[5]
+set_location_assignment PIN_A15 -to saida_lcd_yellow[6]
+set_location_assignment PIN_E11 -to saida_lcd_pink[0]
+set_location_assignment PIN_F11 -to saida_lcd_pink[1]
+set_location_assignment PIN_H12 -to saida_lcd_pink[2]
+set_location_assignment PIN_H13 -to saida_lcd_pink[3]
+set_location_assignment PIN_G12 -to saida_lcd_pink[4]
+set_location_assignment PIN_F12 -to saida_lcd_pink[5]
+set_location_assignment PIN_F13 -to saida_lcd_pink[6]
+set_global_assignment -name VHDL_FILE FSM_jogo.vhd
+set_global_assignment -name VHDL_FILE vidas_display.vhd
+set_global_assignment -name VHDL_FILE Controle_Colisao.vhd
+set_global_assignment -name VHDL_FILE tabuleiro.vhd
+set_global_assignment -name VHDL_FILE GERADOR_COMIDA.vhd
+set_global_assignment -name VHDL_FILE GERADOR_COBRA.vhd
+set_global_assignment -name VHDL_FILE FSM_cobra.vhd
+set_global_assignment -name VHDL_FILE cobra.vhd
+set_global_assignment -name VHDL_FILE sync_mod.vhd
+set_global_assignment -name VHDL_FILE DisplayVGA.vhd
+set_global_assignment -name VHDL_FILE comum.vhd
+set_global_assignment -name VHDL_FILE slither.vhd
+set_global_assignment -name CDF_FILE output_files/Chain2.cdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE output_files/Waveform.vwf
+set_global_assignment -name VHDL_FILE gerador_tick.vhd
+set_location_assignment PIN_J1 -to led1
+set_location_assignment PIN_J2 -to led2
+set_location_assignment PIN_J3 -to led3
+set_global_assignment -name VHDL_FILE BOTOES.vhd
+set_location_assignment PIN_T10 -to bot_mov_green[0]
+set_location_assignment PIN_T9 -to bot_mov_green[1]
+set_location_assignment PIN_U8 -to bot_mov_green[2]
+set_location_assignment PIN_V7 -to bot_mov_green[3]
+set_location_assignment PIN_R12 -to bot_start_green
+set_location_assignment PIN_V11 -to bot_start_pink
+set_location_assignment PIN_R11 -to bot_start_yellow
+set_location_assignment PIN_W10 -to bot_mov_pink[0]
+set_location_assignment PIN_V8 -to bot_mov_pink[1]
+set_location_assignment PIN_W6 -to bot_mov_pink[2]
+set_location_assignment PIN_U7 -to bot_mov_pink[3]
+set_location_assignment PIN_U10 -to bot_mov_yellow[0]
+set_location_assignment PIN_U9 -to bot_mov_yellow[1]
+set_location_assignment PIN_Y7 -to bot_mov_yellow[2]
+set_location_assignment PIN_V6 -to bot_mov_yellow[3]
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

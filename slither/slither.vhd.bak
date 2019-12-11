@@ -1,0 +1,119 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+LIBRARY work;
+USE work.comum.all;
+
+----------------------
+ENTITY cobra IS 
+	PORT (
+		tick: IN STD_LOGIC;
+		meu_estado: IN ESTADO_COBRA; -- estado da cobra
+		estado_jogo: IN ESTADO; 
+		aumenta: IN STD_LOGIC; --sinal de aumentar a cobra
+		--perde_vida: IN STD_LOGIC;
+		posicao_aleatoria: IN coord_type; --sinal de onde a cobra deve iniciar
+		VIDAS: OUT NATURAL RANGE 0 TO INITIAL_LIVES; -- numero de vidas
+		TAMANHO: OUT NATURAL RANGE 0 TO MAX_SNAKE_LENGTH; -- tamanho da cobra
+		POSICAO: OUT posicao_type -- posicao de cada parte da cobra
+	);
+END ENTITY;
+
+ARCHITECTURE cobra OF cobra IS 
+	
+	SIGNAL tam_signal: NATURAL RANGE 0 TO MAX_SNAKE_LENGTH;
+	SIGNAL pos_signal: posicao_type;
+	SIGNAL vida_signal: NATURAL RANGE 0 TO INITIAL_LIVES;
+	BEGIN
+	
+	TAMANHO <= tam_signal;
+	VIDAS <= vida_signal;
+	POSICAO <= pos_signal;
+	
+	PROCESS(tick)
+            BEGIN
+                IF rising_edge(tick) THEN
+					 
+						IF aumenta = '1' THEN -- recebi um sinal que peguei uma comida
+							IF tam_signal < MAX_SNAKE_LENGTH THEN -- se posso crescer ainda...
+								tam_signal <= tam_signal+1; -- cresco!!!!!
+							END IF;
+						END IF;
+					 
+						IF estado_jogo = JOGANDO THEN
+							IF meu_estado = PARADA THEN
+							
+							-- faz nada --
+							
+							ELSIF meu_estado = MORREU THEN
+								tam_signal <= INITIAL_LENGTH; -- se morri, reinicia o tamanho da cobra
+								vida_signal <= vida_signal - 1;-- e perco uma vida xx
+								
+								FOR I in 1 to (MAX_SNAKE_LENGTH-1) loop -- loop para colocar a cobra em outro lugar
+									IF I = 0 THEN
+										pos_signal(0) <= posicao_aleatoria; --cabeça vai para lugar aleatorio
+									ELSE 
+										pos_signal(I)(0) <= 0;  --limpa o resto por precauçao
+										pos_signal(I)(1) <= 0;	--limpa o resto por precauçao
+									END IF;
+								end loop;
+								
+							ELSIF meu_estado = DESAPARECE THEN --morri para sempre
+								
+								vida_signal <= vida_signal - 1; -- perco uma vida
+								tam_signal <= INITIAL_LENGTH;
+								
+								FOR I in 0 to (MAX_SNAKE_LENGTH-1) loop -- limpo a cobra da tela
+										pos_signal(I)(0) <= 0;  --limpa o resto por precauçao
+										pos_signal(I)(1) <= 0;	--limpa o resto por precauçao
+								end loop;
+								
+							ELSE --ESTOU ME MEXENDO
+								
+								FOR I in 1 to (MAX_SNAKE_LENGTH-1) loop -- SHIFT DE POSICOES
+									exit when I = tam_signal ;
+									pos_signal(I)(0) <= pos_signal(I-1)(0); -- (x)
+									pos_signal(I)(1) <= pos_signal(I-1)(1); -- (y)
+								end loop;
+							
+								IF meu_estado = SUBINDO THEN
+							
+									pos_signal(0)(1) <= (pos_signal(0)(1)+1); -- soma posicao y
+							
+								ELSIF meu_estado = DESCENDO THEN
+							
+									pos_signal(0)(1) <= (pos_signal(0)(1)-1); -- decrementa posicao y
+									
+								ELSIF meu_estado = ESQUERDA THEN
+							
+									pos_signal(0)(0) <= (pos_signal(0)(0)-1); -- decrementa posicao x
+									
+								ELSIF meu_estado = DIREITA THEN
+									
+									pos_signal(0)(0) <= (pos_signal(0)(0)+1); -- soma posicao x
+									
+								END IF;
+							END IF;
+							
+						ELSIF estado_jogo = ESPERANDO THEN --seta os parametros iniciais da cobra no estado ESPERANDO do jogo
+							tam_signal <= INITIAL_LENGTH;
+							vida_signal <= INITIAL_LIVES;
+							FOR I in 1 to (MAX_SNAKE_LENGTH-1) loop 
+									IF I = 0 THEN
+										pos_signal(0) <= posicao_aleatoria; --cabeça vai para lugar aleatorio
+									ELSE 
+										pos_signal(I)(0) <= 0;  --limpa o resto por precauçao
+										pos_signal(I)(1) <= 0;	--limpa o resto por precauçao
+									END IF;
+							END LOOP;
+						ELSIF estado_jogo = ACABOU THEN
+						
+						--PARA A COBRA, A PRINCIPIO NAO FAZ NADA--
+						
+						END IF;
+					
+				
+                END IF;
+    END PROCESS;
+	
+
+ END;
